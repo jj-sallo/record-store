@@ -51,7 +51,7 @@ public class AlbumController {
         return new ResponseEntity<>(albumRepository.findAll(), HttpStatus.CREATED);
     }
 
-    @PostMapping(value = "/create")
+    @PostMapping(headers = "Accept=application/json")
     ResponseEntity<Album> newUser(@RequestBody Album album) {
         try {
             albumRepository.save(album);
