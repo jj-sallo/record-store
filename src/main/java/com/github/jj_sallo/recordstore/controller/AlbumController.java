@@ -20,6 +20,16 @@ public class AlbumController {
     @Autowired
     AlbumRepository albumRepository;
 
+    @GetMapping(value = "/{id}")
+    ResponseEntity<Album> getAlbum(@PathVariable long id) {
+        Optional<Album> albumData = albumRepository.findById(id);
+        if(albumData.isPresent()) {
+            return new ResponseEntity<>(albumData.get(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
     @GetMapping
     @ResponseBody
     ResponseEntity<List<Album>> getAllAlbums() {
@@ -41,7 +51,7 @@ public class AlbumController {
         return new ResponseEntity<>(albumRepository.findAll(), HttpStatus.CREATED);
     }
 
-    @PostMapping(value = "/create")
+    @PostMapping(headers = "Accept=application/json")
     ResponseEntity<Album> newUser(@RequestBody Album album) {
         try {
             albumRepository.save(album);
@@ -51,7 +61,7 @@ public class AlbumController {
         }
     }
 
-    @PutMapping(value = "/update/{id}", headers = "Accept=application/json")
+    @PutMapping(value = "/{id}", headers = "Accept=application/json")
     ResponseEntity<Album> updateUser(@RequestBody Album album, @PathVariable(value = "id") long id) {
         Optional<Album> albumData = albumRepository.findById(id);
         if (albumData.isPresent()) {
