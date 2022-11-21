@@ -30,7 +30,7 @@ public class UserController {
         return new ResponseEntity<>(userRepository.findAll(), HttpStatus.OK);
     }
 
-    @PutMapping(value = "/update/{id}", headers = "Accept=application/json")
+    @PutMapping(value = "/{id}", headers = "Accept=application/json")
     ResponseEntity<User> updateUser(@RequestBody User user, @PathVariable(value = "id") long id) {
         Optional<User> userdata = userRepository.findById(id);
         if (userdata.isPresent()) {
@@ -67,7 +67,7 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.CREATED);
         }
     }
-    @DeleteMapping(value = "delete/{id}")
+    @DeleteMapping(value = "/{id}")
     ResponseEntity<HttpStatus> deleteUser(@PathVariable long id) {
         try {
             userRepository.deleteById(id);
