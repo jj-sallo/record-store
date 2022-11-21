@@ -58,7 +58,7 @@ public class UserController {
         return new ResponseEntity<>(userRepository.findAll(), HttpStatus.CREATED);
     }
 
-    @PostMapping(value = "/create")
+    @PostMapping(headers = "Accept=application/json")
     ResponseEntity<User> newUser(@RequestBody User user) {
         try {
             userRepository.save(user);
