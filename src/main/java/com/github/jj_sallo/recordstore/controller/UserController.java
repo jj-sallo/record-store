@@ -36,7 +36,7 @@ public class UserController {
         if (userdata.isPresent()) {
             try {
                 User foundUser = userdata.get();
-                foundUser.email = user.email;
+                foundUser.setEmail(user.getEmail());
                 userRepository.save(foundUser);
                 return new ResponseEntity<>(foundUser, HttpStatus.OK);
             } catch (Exception e) {
@@ -52,7 +52,7 @@ public class UserController {
         Faker faker = new Faker();
         for (int i = 0; i < 5; i++) {
             User user = new User();
-            user.email = faker.internet().emailAddress();
+            user.setEmail(faker.internet().emailAddress());
             userRepository.save(user);
         }
         return new ResponseEntity<>(userRepository.findAll(), HttpStatus.CREATED);

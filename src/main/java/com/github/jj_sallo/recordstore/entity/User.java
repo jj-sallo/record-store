@@ -12,5 +12,11 @@ public class User {
     public Long id;
 
     @Column(name="user_email")
-    public String email;
+    private String email;
+    public String getEmail() {
+        return email;
+    }
+    public void setEmail(String email) {
+        this.email = email;
+    }
 }
