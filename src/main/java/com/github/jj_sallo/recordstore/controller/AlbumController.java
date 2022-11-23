@@ -41,11 +41,11 @@ public class AlbumController {
         Faker faker = new Faker();
         for (int i = 0; i < 5; i++) {
             Album album = new Album();
-            album.name = faker.book().title();
-            album.artists = faker.artist().name();
-            album.coverArt = faker.file().fileName("albums/coverart", null, ".jpeg", null);
-            album.songList = faker.file().fileName("albums/songs", null, ".flac", null);
-            album.releaseDate = faker.date().past(1, TimeUnit.SECONDS);
+            album.setName(faker.book().title());
+            album.setArtists(faker.artist().name());
+            album.setCoverArt(faker.file().fileName("albums/coverart", null, ".jpeg", null));
+            album.setSongList(faker.file().fileName("albums/songs", null, ".flac", null));
+            album.setReleaseDate(faker.date().past(1, TimeUnit.SECONDS));
             albumRepository.save(album);
         }
         return new ResponseEntity<>(albumRepository.findAll(), HttpStatus.CREATED);
@@ -67,11 +67,11 @@ public class AlbumController {
         if (albumData.isPresent()) {
             try {
                 Album foundAlbum = albumData.get();
-                foundAlbum.name = album.name;
-                foundAlbum.artists = album.artists;
-                foundAlbum.coverArt = album.coverArt;
-                foundAlbum.songList = album.songList;
-                foundAlbum.releaseDate = album.releaseDate;
+                foundAlbum.setName(album.getName());
+                foundAlbum.setArtists(album.getArtists());
+                foundAlbum.setCoverArt(album.getCoverArt());
+                foundAlbum.setSongList(album.getSongList());
+                foundAlbum.setReleaseDate(album.getReleaseDate());
                 albumRepository.save(foundAlbum);
                 return new ResponseEntity<>(foundAlbum, HttpStatus.OK);
             } catch (Exception e) {
