@@ -1,8 +1,8 @@
 package com.github.jj_sallo.recordstore.controller;
 
-import com.github.javafaker.Faker;
 import com.github.jj_sallo.recordstore.entity.User;
 import com.github.jj_sallo.recordstore.repository.UserRepository;
+import com.github.jj_sallo.recordstore.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,14 +12,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
-// Guardar
-// Obtener todos
-// Obtener uno
-// Eliminar
-
 @CrossOrigin(origins = "http://localhost:8081")
 @RestController
-@RequestMapping(value = "/users")
+@RequestMapping(value = "/api/users")
 public class UserController {
     @Autowired
     UserRepository userRepository;
@@ -49,12 +44,8 @@ public class UserController {
 
     @PostMapping("/generate")
     ResponseEntity<List<User>> generateUsers() {
-        Faker faker = new Faker();
-        for (int i = 0; i < 5; i++) {
-            User user = new User();
-            user.setEmail(faker.internet().emailAddress());
-            userRepository.save(user);
-        }
+        List<User> userList = UserService.generateUsers(5);
+        userRepository.saveAll(userList);
         return new ResponseEntity<>(userRepository.findAll(), HttpStatus.CREATED);
     }
 
@@ -67,6 +58,7 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.CREATED);
         }
     }
+
     @DeleteMapping(value = "/{id}")
     ResponseEntity<HttpStatus> deleteUser(@PathVariable long id) {
         try {
