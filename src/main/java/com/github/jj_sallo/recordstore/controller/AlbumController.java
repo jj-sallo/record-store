@@ -14,7 +14,7 @@ import java.util.Optional;
 
 @CrossOrigin(origins = "http://localhost:8081")
 @RestController
-@RequestMapping(value = "/albums")
+@RequestMapping(value = "/api/albums")
 public class AlbumController {
     @Autowired
     AlbumRepository albumRepository;
